@@ -1,0 +1,17 @@
+{% if menu %}
+<ul
+  class="grid lg:flex lg:space-x-5 text-2xl h-screen lg:h-auto md:text-base lg:text-sm place-content-center gap-y-10 md:py-5 md:my-5 lg:py-0 lg:my-0"
+>
+  {% for item in items %}
+  <li class="{{ item.classes | join(' ') }} text-center align-middle">
+    <a
+      target="{{ item.target }}"
+      href="{{ item.link }}"
+      class="hover:text-red-500 transition-all ease-out"
+      >{{ item.title }}</a
+    >
+  </li>
+  {% endfor %}
+</ul>
+
+{% endif %}

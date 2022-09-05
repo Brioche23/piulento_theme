@@ -1,0 +1,47 @@
+{% block content %}
+
+{% set sez = "s-"~ post.category.slug |join(' s-') %}
+{% set att = "a-"~ post.attivita |join(' a-') %}
+{% set sca = "sc-"~ post.scala |join(' sc-') %}
+
+{# ! Non prende tag slugs: per ora Slug di MAX 1 parola #}
+{% set tags = "t-"~ post |join(' t-') %}
+{# {% set tags = post |join(' ') %} #}
+{# {% for tag in post.tags %}
+{% set tags = "t-"~ tag.slug|join(' ') %}
+
+{% endfor %} #}
+
+{# {% set servs = post.terms('category')| slug %} #}
+
+<article class="tease tease-{{ post.post_type }} mix {{ sez }} {{ att }} {{sca}} {% for tag in post.tags %}{{" t-"~
+    tag.slug }} {% endfor %}" id="tease-{{ post.ID }}">
+    <div class="card group " data-order="{{i}}">
+
+        <a href="{{ post.link }}">
+            {% if post.get_thumbnail %}
+            <div class="card-img">
+                <img src="{{ post.thumbnail.src|towebp|resize(1200) }}"
+                    class="object-cover w-full {{ i == 2 ? 'md:col-span-2 md:aspect-2/1 md:pb-5 aspect-square' : 'aspect-square' }}  group-hover:brightness-90 transition-all ease-in-out" />
+            </div>
+            {% else %}
+            <div class="card-img w-full  aspect-square bg-slate-700">
+            </div>
+            {% endif %}
+
+            {# {% set categories = post.terms('category') %} #}
+            {# Changing the padding to keep the same height of the images #}
+            <div
+                class="card testo {{ i == 2 ? 'md:mb-5 md:mt-2 ' }}">
+                <p class="text-sm uppercase text-red-500">
+                    {{post.meta("anno") }}
+                </p>
+                <h4 class="h4 font-bold text-lg">
+                    {{ post.title }}
+                </h4>
+                <p class="font-sans text-sm">{{ post.meta("sottotitolo") }}</p>
+            </div>
+        </a>
+    </div>
+</article>
+{% endblock %}

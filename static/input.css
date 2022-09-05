@@ -1,0 +1,121 @@
+/*
+ * Theme Name: Piùlento
+ * Description: A bespoke theme for Piùlento
+ * Author: Pietro Buffa
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .inside {
+    @apply px-5 lg:px-10 max-w-screen-2xl mx-auto w-full;
+  }
+
+  .action {
+    @apply text-sm text-red-500;
+  }
+
+  h2 {
+    @apply font-sans text-4xl font-light text-red-500;
+  }
+
+  .arrow.right {
+    @apply after:transition-all after:duration-300 hover:after:translate-x-2;
+  }
+  .arrow.up {
+    @apply after:transition-all after:duration-300 hover:after:-translate-y-2;
+  }
+  .plus {
+    @apply text-base sm:text-sm after:transition-all after:duration-300 after:fill-red-500;
+  }
+
+  .filter {
+    @apply text-base sm:text-sm w-1/2 md:w-1/5 mt-5 mb-5;
+  }
+
+  .filter-btn {
+    @apply hover:text-red-500 text-sm;
+  }
+
+  .control-active {
+    @apply font-bold  before:rotate-45 transition-all;
+  }
+
+  .wysiwyg > p > a {
+    @apply text-red-500;
+  }
+  .wysiwyg > h3 {
+    @apply font-sans pb-2;
+  }
+  .wysiwyg > h2 {
+    @apply text-2xl pb-2;
+  }
+
+  .open-img {
+    @apply aspect-square md:aspect-2/1 w-full object-cover;
+  }
+
+  .cartiglio {
+    @apply grid w-auto md:w-1/4 lg:w-1/3 grid-cols-3 md:grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-5 auto-rows-min text-sm py-5 md:mr-5;
+  }
+
+  .content-wrapper > article {
+    @apply xl:flex xl:place-content-center;
+  }
+
+  .titolo {
+    @apply text-5xl sm:text-6xl font-bold tracking-tight;
+  }
+
+  .card.testo {
+    @apply my-5 group-hover:-translate-y-1 transition-all ease-in-out;
+  }
+
+  /* button.fb {
+    @apply focus: font-bold hover:text-red-500;
+  }
+  button.mixitup-control-active {
+    @apply font-bold text-red-500;
+  } */
+
+  .plus.attivo {
+    @apply after:rotate-45;
+  }
+}
+
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+
+.arrow::after {
+  background-image: url(./static/src/arrow.svg);
+  content: "";
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-left: 0.3rem;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.control-active:before,
+.plus::after {
+  background-image: url(./static/src/plus.svg);
+  content: "";
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-left: 0rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.3s ease;
+}
+
+:hover.arrow-link:after {
+  display: inline-block;
+  fill: red;
+}

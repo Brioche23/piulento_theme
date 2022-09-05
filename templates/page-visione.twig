@@ -1,0 +1,41 @@
+{% extends "base.twig" %} {% block content %}
+<div class="content-wrapper">
+  <article
+    class="post-type-{{ post.post_type }}"
+    id="post-{{ post.ID }}">
+    <main class="article-content inside">
+      <div class="lg:w-4/5 py-10">
+        <h1 class="titolo">{{ post.title }}</h1>
+        <h3 class="text-2xl sm:text-3xl font-serif pt-5">
+          {{ post.meta("testo_iniziale") }}
+        </h3>
+      </div>
+
+      <div class="">
+        <img
+          src="{{ Image(post.meta('immagine')).src | towebp }}"
+          alt=""
+          class="open-img"
+        />
+      </div>
+      <div class="lg:flex pb-10 place-content-start">
+        <div
+          class="space-y-10 md:w-2/3 lg:w-1/2 xl:w-2/4 mr-auto text-xl font-serif"
+        >
+          <p>
+            {{ post.content }}
+          </p>
+        </div>
+        <!-- TODO altezza responsive -->
+        <div class="md:w-1/2 xl:w-2/4 max-w-lg m-auto">
+          <img
+            src="{{ Image(post.meta('img_verticale')).src }}"
+            alt=""
+            class="p-10 object-scale-down"
+          />
+        </div>
+      </div>
+    </main>
+  </article>
+</div>
+{% endblock %}

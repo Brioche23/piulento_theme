@@ -1,0 +1,41 @@
+{% extends "base.twig" %} {% block content %}
+<div class="content-wrapper inside">
+    <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+        <main class="article-content">
+            <div class="lg:w-4/5 py-10 ">
+                <h1 class="titolo">{{ post.title }}</h1>
+            </div>
+
+            <div class="py-5" x-data="{ open: true }">
+                <div class="nav pb-5 border-b">
+                    <ul class="flex space-x-5 text-2xl ">
+                        <li class="hover:text-red-500 ">
+                            <button class="font-bold" x-bind:class=" open ? 'text-red-500 ' : ''"
+                                @click="open=true">Libri</button>
+                        </li>
+                        <li class="hover:text-red-500 font-bold">
+                            <button class="font-bold" x-bind:class=" !open ? 'text-red-500 ' : ''"
+                                @click="open=false">Articoli</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Lista di post -->
+
+                <div x-show="open" x-transition.opacity.duration.300ms
+                    class="grid sm:grid-cols-2 md:grid-cols-3 gap-10 pt-5 mb-5">
+                    {% for post in libri %} {% include ['tease-'~post.post_type~'.twig',
+                    'tease.twig'] %}
+                    {% endfor %}
+                </div>
+                <div x-show="!open" x-transition.opacity.duration.300ms class="my-list mb-5">
+                    {% for articolo in post.meta('articoli') %}
+                    <div class="wysiwyg py-5 border-b">
+                        {{ articolo.articolo | wpautop }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </article>
+</div>
+{% endblock %}

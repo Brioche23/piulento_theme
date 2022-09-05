@@ -1,0 +1,57 @@
+{% extends "base.twig" %} {% block content %}
+<style>
+  h3>p>strong {
+    font-family: "Inter", sans-serif;
+  }
+</style>
+<div class="">
+  <article class="post-type-{{post.post_type}} " id="post-{{ post.ID }}">
+    <main class="article-content inside">
+      <section id="intro" class="pb-10 sm:pt-5">
+        <div class="article-body">
+          <div class="py-10 lg:w-4/5">
+            <h1 class="text-2xl md:text-3xl lg:text-4xl pb-5 font-serif">
+              {{ post.meta("testo_iniziale") }}
+            </h1>
+            <a href="visione" class="action arrow right">La nostra visione</a>
+          </div>
+        </div>
+      </section>
+      <section id="portfolio" class="pb-10">
+        <div class="section-header">
+          <h3 class="text-3xl font-bold">Portfolio</h3>
+          <a href="portfolio" class="action arrow right">Tutti i progetti</a>
+        </div>
+
+        <!-- 5 progetti -->
+        <div class="section-body mt-5">
+          <div class="grid md:grid-cols-3 gap-10">
+            {% set i = 1 %}
+            {% for p in progetti_evid %}
+            <div class="card group {{ i == 2 ? 'md:col-span-2 '}}">
+              {% include ['tease-selected-'~p.post.post_type~'.twig', 'tease.twig'] with {id: i} %}
+            </div>
+            {% set i = i + 1 %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section id="end" class="bg-slate-300 py-16 xl:block w-screen">
+      <div class="flex flex-wrap gap-y-10 inside">
+        <figure class="px-24 sm:px-32 md:px-0 md:pr-20 place-self-center w-full md:w-1/3">
+          <img src="{{ Image(post.meta('immagine_finale')).src | towebp }}" alt="" class="w-full" />
+        </figure>
+        <div class="flex flex-col justify-between md:w-2/3">
+          <h3 class="text-2xl font-serif">
+            {{ post.meta("testo_finale") }}
+          </h3>
+          <a href="profilo" class="action arrow right pt-5">Profilo</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</div>
+
+{% endblock %}

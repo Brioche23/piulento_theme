@@ -1,0 +1,79 @@
+{% block html_head_container %} {% include 'html-header.twig' %} {% block head
+%} {% endblock %}
+<!-- </head> -->
+{% endblock %}
+
+<body x-data="{expanded : false,
+close(){
+  if(this.expanded) this.expanded=false;
+}}" class="{{ body_class }} lg:overflow-auto  " :class="expanded && ' overflow-hidden'" data-template="base.twig"
+  data-barba="wrapper">
+  <a class="skip-link screen-reader-text" href="#content">{{
+    _e("Skip to content")
+    }}</a>
+  <!-- Navbar -->
+  <div id="nav-links" x-show="expanded" x-transition
+    class="nav-main absolute z-0 transition-all right-0 h-screen bg-white lg:hidden" :class="expanded || ' '"
+    x-on:click.outside="close()">
+    <div x-on:click="close()" class="md:w-80 w-screen grid place-items-center">
+      {% include "menu.twig" with {'items': menu.get_items} %}
+    </div>
+  </div>
+
+  <!-- Page -->
+  <div class="flex flex-col h-screen justify-between">
+    <!-- Header -->
+    <header class="py-5 inside">
+      {% block header %}
+      <nav id="nav-main" role="navigation">
+        <!-- Logo e Bottone -->
+        <div class="flex justify-between items-center">
+          <a class="hdr-logo-link text-4xl font-bold tracking-tighter py-2 group z-10" href="home" rel="home">
+            <div class="flex">
+              <img alt="Piulento Logo" src="{{ custom_logo_url }}"
+                class="h-8 pr-4 group-hover:-translate-x-1 transition-all ease-in-out" />
+              <h1 class="hdr-logo font-bold text-3xl tracking-tight logo" role="banner">
+                {{ site.name }}
+              </h1>
+            </div>
+          </a>
+          <div class="lg:hidden">
+            <button @click="expanded = ! expanded, console.log(expanded)" class="hamburger hamburger--spin z-10"
+              :class="expanded && ' is-active'">
+              <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span>
+            </button>
+          </div>
+          <div id="nav-links" class="nav-main hidden bg-white lg:block">
+            {% include "menu.twig" with {'items': menu.get_items} %}
+          </div>
+        </div>
+      </nav>
+      {% endblock %}
+    </header>
+
+    <!-- Content -->
+    <section id="content" role="main" class="content-wrapper mb-auto">
+      <div class="wrapper {{ sidebar_class }}">
+        {% block content %} Sorry, no content {% endblock %}
+      </div>
+      {% if sidebar %}
+      <aside class="layout-sidebar">
+        {{ sidebar }}
+      </aside>
+      {% endif %}
+    </section>
+
+    <!-- <footer></footer> -->
+    {% block footer %}
+    <footer id="footer" class="flex left-0 bg-slate-700 text-white {{ post.link != 'https://www.piulento.it/home/' ? 'mt-10'   }}   py-5 md:py-10 text-sm place-content-center bottom-0">
+      {% include 'footer.twig' with {'items': footer.get_items} %}
+    </footer>
+  </div>
+
+  {{ add_script() }}
+  {{ function("wp_footer") }}
+  {% endblock %}
+</body>
+<!-- </html> -->

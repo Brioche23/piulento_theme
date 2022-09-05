@@ -1,0 +1,22 @@
+{% extends "base.twig" %} {% block content %}
+<div class="content-wrapper">
+  <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+    <main class="article-content inside">
+      <div class="py-10 ">
+        <h1 class="titolo">{{ post.title }}</h1>
+        <p class="text-3xl font-serif pt-5">
+          {{ post.meta("testo") }}
+          </br>
+          Per informazioni scrivici a
+          <a href="mailto:{{options.email}}" class="text-red-500">{{options.email}}</a>
+        </p>
+      </div>
+
+      <div class="py-10  space-y-10 h-full">
+        <div>{% include 'partial/contact-1.twig' %}</div>
+        <div>{% include 'partial/contact-2.twig' %}</div>
+      </div>
+    </main>
+  </article>
+</div>
+{% endblock %}

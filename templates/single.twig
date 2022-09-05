@@ -1,0 +1,157 @@
+{% extends "base.twig" %} {% block content %} {% set voci_cartiglio=[ { id:0,
+nome: "Sezione", url: "category", acf:false }, { id:1, nome: "Attività", url:
+"attivita", acf:false }, { id:2, nome: "Committente", url:"committente",
+acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
+"Anno", url: "anno", acf:true }, { id:5, nome: "Luogo", url: "luogo", acf:true
+}, ] %}
+
+<style>
+  :root {
+    --swiper-theme-color: #000;
+    --swiper-navigation-size: 48;
+  }
+
+  .swiper-wrapper {
+    width: 50%;
+    height: auto;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    width: auto;
+    height: 500px;
+  }
+
+  .swiper-pagination {
+    bottom: 0px;
+  }
+</style>
+
+<div class="content-wrapper inside">
+  <article
+    class="post-type-{{ post.post_type }}"
+    id="post-{{ post.ID }}"
+  >
+    <main class="article-content pt-8">
+      <h1 class="titolo">
+        {{ post.title }}
+      </h1>
+      <div class="pt-10">
+        <img
+          class="open-img"
+          src="{{ post.thumbnail.src|towebp|resize(1800) }}"
+        />
+      </div>
+
+      <div class="article-content">
+        <h3 class="font-serif text-4xl pt-10">{{ post.meta("abstract") }}</h3>
+
+        <div class="md:flex pt-6">
+          {# Cartiglio #}
+          <div
+            id="cartiglio"
+            class="grid w-auto md:w-1/4 lg:w-1/3 grid-cols-3 md:grid-cols-1 lg:grid-cols-2 lg:gap-x-5 gap-y-5 grid-rows-2 md:grid-rows-none lg:grid-rows-4 text-sm pt-5 md:mr-5"
+          >
+            {% for voce in voci_cartiglio %}
+            <div class="">
+              <p class="text-gray-600">{{ voce.nome }}</p>
+              {% if voce.acf == true %}
+              <p class="text-sm">{{ post.meta(voce.url) }}</p>
+              {% elseif acf == false %} {% for term in post.terms(voce.url) %}
+              <p>{{ term.name }}</p>
+              {% endfor %} {% endif %}
+            </div>
+            {% endfor %}
+            <!-- Sito Web -->
+            <div class="">
+              {% if post.meta('sito') %}
+              <p class="text-gray-600">Riferimenti</p>
+              <a
+                class="hover:text-red-500"
+                href="{{ post.meta('sito').url }}"
+                target="{{ post.meta('sito').target }}"
+              >
+                <p class="text-sm">{{ post.meta("sito").title }}</p>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Testo -->
+          <div
+            id="testo"
+            class="space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 md:pt-0"
+          >
+            <p>
+              {{ post.meta("testo") | wpautop }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODO Flasha con safari?? -->
+      <div class="swiper mySwiper my-16">
+        <div class="swiper-wrapper">
+          {% for image in post.meta('galleria') %}
+          <div class="swiper-slide select-none">
+            <img
+              load="lazy"
+              class="slide-image"
+              src="{{ Image(image) | towebp | resize(1800) }}"
+            />
+          </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        {#
+        <div class="swiper-pagination"></div>
+        #}
+      </div>
+
+      <!-- TODO Altri Post (Scelti da Utente o Auto?) -->
+      <section class="mt-10 py-10 border-t">
+        <h3 class="font-bold text-2xl">Vedi anche</h3>
+        <div
+          class="md:grid md:grid-cols-3 gap-10 space-y-10 md:space-y-0 py-10"
+        >
+          {% for post in progetti_single %}
+          <div class="card group">
+            {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  </article>
+</div>
+
+<script>
+  window.addEventListener("load", function () {
+    let swiper = new Swiper(".mySwiper", {
+      loop: true,
+      grabCursor: true,
+      slidesPerView: "auto",
+      centeredSlides: true,
+      spaceBetween: 30,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        type: "fraction",
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      a11y: {
+        prevSlideMessage: "Previous slide",
+        nextSlideMessage: "Next slide",
+      },
+    });
+  });
+</script>
+<!-- /content-wrapper -->
+{% endblock %}

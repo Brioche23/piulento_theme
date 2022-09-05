@@ -1,0 +1,30 @@
+{% block html_head_container %} {% include 'html-header.twig' %} {% block head
+%} {% endblock %}
+<!-- </head> -->
+{% endblock %}
+
+<body data-template="base_2.twig">
+    <!-- Content -->
+    <section id="content" role="main" class="content-wrapper h-screen mb-auto">
+        <div class="wrapper {{ sidebar_class }}">
+            {% block content %} Sorry, no content {% endblock %}
+        </div>
+        {% if sidebar %}
+        <aside class="layout-sidebar">
+            {{ sidebar }}
+        </aside>
+        {% endif %}
+    </section>
+
+
+    {% block footer %}
+    <footer></footer>
+    </div>
+
+    {{ add_script() }}
+    {{ function("wp_footer") }}
+
+    {% endblock %}
+
+</body>
+<!-- </html> -->

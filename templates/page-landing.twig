@@ -1,0 +1,51 @@
+{% extends "base_2.twig" %} {% block content %}
+<div class="">
+    <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+        <main class="article-content flex justify-between">
+            <!-- Sinistra -->
+            <div id="nav-main" role="navigation" class="w-full pt-4 md:w-1/2 h-screen flex mx-5 md:pl-10 flex-col">
+                <!-- Logo animation-->
+                <div class="flex justify-between place items-center">
+                    <a class="hdr-logo-link text-4xl font-bold tracking-tighter py-2 group z-10" href="#" rel="none">
+                        <div class="flex ">
+                            <lottie-player src="{{ site.theme.link }}/static/src/lottie/animation.json"
+                                background="transparent" speed="1" class="mr-5" style="width: 100px" loop autoplay>
+                            </lottie-player>
+                            <h1 class="hdr-logo font-bold text-3xl tracking-tight logo my-auto" role="banner">
+                                {{ site.name }}
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Testo -->
+                <div class="font-serif font-bold text-3xl sm:text-4xl my-auto w-max">
+                    <p>Paesaggio</p>
+                    <p>Infrastrutture</p>
+                    <p>Urbanistica</p>
+                    <hr class="my-3 border-1 border-black">
+                    <p class=" font-sans font-bold text-xl"> Sito web <br> in
+                        costruzione</p>
+                </div>
+
+                <!-- Estremi -->
+                <div class="bottom-0 pb-5 md:pb-10">
+                    <div class="pb-5">
+                        <a href="mailto:info@piulento.it" class="text-red-500">info@piulento.it</a>
+                    </div>
+                    <div>
+                        <p>Piùlento S.r.l. S.t.p.</p>
+                        <p>P.IVA / C.F. 12396530961</p>
+                        <p>Milano</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Immagine destra -->
+            <div class="hidden sm:block  md:w-1/2 max-h-screen"
+                style="background:url({{Image(post.meta('immagine')).src }})">
+            </div>
+        </main>
+    </article>
+</div>
+{% endblock %}

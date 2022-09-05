@@ -1,0 +1,85 @@
+{% extends "base.twig" %} {% block content %} {% set voci_cartiglio=[ { id:1, nome: "Editore", url:
+"editore", acf:true }, { id:2, nome: "Anno", url:"anno",
+acf:true }, { id:3, nome: "Formato", url: "formato", acf:true }, { id:4, nome:
+"Pagine", url: "pagine", acf:true }, { id:5, nome: "Lingua", url: "lingua", acf:true
+},{ id:6, nome: "ISBN", url: "isbn", acf:true} ] %}
+
+<style>
+    :root {
+        --swiper-theme-color: #000;
+        --swiper-navigation-size: 48;
+    }
+
+    .swiper-wrapper {
+        width: 50%;
+        height: auto;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        width: auto;
+        height: 500px;
+    }
+
+    .swiper-pagination {
+        bottom: 0px;
+    }
+</style>
+
+<div class="content-wrapper inside">
+    <article class="post-type-{{ post.post_type }} mb-5" id="post-{{ post.ID }}"
+        data-barba="container" data-barba-namespace="{{ post.title }}">
+        <main class="article-content pt-8">
+            <h1 class="titolo">
+                {{ post.title }}
+            </h1>
+            <h3 class="text-2xl font-serif pt-4">
+                {{ post.sottotitolo }}
+            </h3>
+            {% if post.thumbnail.src %}
+            <div class="mt-10 bg-[#F3F3F3]">
+                <img class="open-img"
+                    src="{{ post.thumbnail.src|towebp|resize(1900) }}" />
+            </div>
+            {% endif %}
+
+            <div class="article-content">
+                <div class="md:flex pt-6">
+                    {# Cartiglio #}
+                    <div class="cartiglio">
+                        <div class="elemento-cartiglio">
+                            <p class="text-gray-600">Autori</p>
+                            {{ post.meta("autori") | wpautop }}
+                        </div>
+                        {% for voce in voci_cartiglio %}
+                        {% if voce.acf == true %}
+                        {% if post.meta(voce.url) %}
+                        <div class="elemento-cartiglio">
+                            <p class="text-gray-600">{{ voce.nome }}</p>
+                            <p class="text-sm">{{ post.meta(voce.url) }}</p>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        <!-- Sito Web -->
+                        {% if post.meta('link') %}
+                        <div class="elemento-cartiglio">
+                            <p class="text-gray-600">Link</p>
+                            <a class="hover:text-red-500" href="{{ post.meta('link').url }}"
+                                target="{{ post.meta('link').target }}">
+                                <p class="text-sm">{{ post.meta("link").title }}</p>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Testo -->
+                    <div id="testo" class=" space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 pb-10 md:pt-5">
+                        {{ post.meta("descrizione") | wpautop }}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </article>
+</div>
+{% endblock %}

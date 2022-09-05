@@ -1,0 +1,50 @@
+<div class="flex flex-wrap sm:flex-nowrap justify-between text-base sm:text-sm inside">
+  <div class="w-auto">
+    <p class="font-bold pb-5">{{ options.ragione_sociale }}</p>
+
+    {# <p>{{ options.via }}, {{ options.civico }}</p>
+    <p>{{ options.cap }} {{ options.citta }}</p> #}
+    <p class="">P.IVA / C.F. {{ options.p_iva }}</p>
+    <p>{{ options.citta }}</p>
+
+    {# <p>{{ options.rea }}</p> #}
+    <p>Mail:
+      <a href="mailto:{{ options.email }}" class="hover:text-red-500 transition-all ease-out">
+        {{ options.email }}
+      </a>
+    </p>
+    <p>Pec:
+      <a href="mailto:{{ options.pec }}" class="hover:text-red-500 transition-all ease-out">
+        {{ options.pec }}
+      </a>
+    </p>
+    <figure class="w-32 pt-5 bottom-0 sm:hidden ">
+      <img class="w-full" src="{{ Image(options.logo_spin_off).src }}" alt="logo spin-off">
+    </figure>
+  </div>
+  <figure class="w-36 pt-10 hidden sm:block ">
+    <img class="w-full" src="{{ Image(options.logo_spin_off).src }}" alt="logo spin-off">
+  </figure>
+
+  <div class="w-auto pt-5">
+    <ul class="text-base sm:text-sm">
+      {% for item in items %}
+      <li class="{{ item.classes | join(' ') }} {{ (item.title == 'Facebook' or item.title == 'Portfolio') ? 'mt-5' }}">
+        <a target="{{ item.target }}" href="{{ item.link }}" class="text-white arrow right">{{ item.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div
+    class="w-full sm:w-auto mt-10 sm:mt-5 grid grid-rows-2 place-items-center sm:place-content-between sm:place-items-start">
+    <a href="#" class="text-white sm:justify-self-end arrow up after:-rotate-90">
+      Torna su
+    </a>
+    <p class="sm:place-self-end mt-5">Copyright {{"now"|date('Y')}}</p>
+  </div>
+</div>
+<!-- 
+<div class="flex sm:justify-center">
+  <p class="pt-5 content-center">Copyright {{"now"|date('Y')}}</p>
+</div> -->

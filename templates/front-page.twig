@@ -1,0 +1,130 @@
+{% extends "base.twig" %} {% block content %}
+
+<div class="content-wrapper">
+  <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+    <main class="article-content inside">
+      <div class="md:w-4/5 py-10">
+        <h1 class="titolo">Portfolio</h1>
+        <p class="text-2xl sm:text-3xl font-serif pt-5">{{ options.testo_portfolio }}</p>
+      </div>
+
+      <!-- Filtri -->
+      <div class="" x-data="{
+  open: false,
+  toggle() {
+      if (this.open) {
+          return this.close()
+      }
+
+      this.open = true
+  },
+  close(focusAfter) {
+      if (! this.open) return
+
+      this.open = false
+
+      focusAfter && focusAfter.focus()
+  }
+}" x-on:keydown.escape.prevent.stop="close($refs.button)"
+        x-on:focusin.window="! $refs.panel.contains($event.target) && close()" x-id="['dropdown-button']">
+        <div class="flex place-content-between mb-5">
+          <button type="button" class="plus" :class="open && ' attivo'" x-ref="button" x-on:click="toggle()"
+            :aria-expanded="open" :aria-controls="$id('dropdown-button')" aria-expanded="true"
+            aria-controls="dropdown-button-1">
+            Filtri
+          </button>
+          <button type="button" class="filter-btn" data-filter="all">
+            Cancella filtri
+          </button>
+        </div>
+        <div x-ref="panel" x-show="open" x-collapse.duration.600ms x-transition.opacity x-transition:enter.duration.600m
+          x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')"
+          class="flex flex-wrap justify-between border-t" id="dropdown-button-1">
+          <!-- Sezione -->
+          <div class="filter">
+            <h4 class="font-bold pb-2 text-gray-500">Sezione</h4>
+            <ul class="space-y-2">
+              {% for category in categories %}
+              <li>
+                <button data-toggle=".s-{{ category.slug }}" class="filter-btn">
+                  {{ category.name }}
+                </button>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- Attività -->
+          <div class="filter">
+            <h4 class="font-bold pb-2 text-gray-500">Attività</h4>
+            <ul class="space-y-2">
+              {% for attiv in attivita %}
+              <li>
+                <button data-toggle=".a-{{ attiv.slug }}" class="filter-btn">
+                  {{ attiv.name }}
+                </button>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Tags -->
+          <div class="filter">
+            <h4 class="font-bold pb-2 text-gray-500">Tag</h4>
+            <ul class="space-y-2">
+              {% for tag in tags %}
+              <li>
+                <button data-toggle=".t-{{ tag.slug }}" class="filter-btn">
+                  {{ tag.name }}
+                </button>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- Scala -->
+          <div class="filter">
+            <h4 class="font-bold pb-2 text-gray-500">Scala</h4>
+            <ul class="space-y-2">
+              {% for sc in scala %}
+              <li>
+                <button data-toggle=".sc-{{ sc.slug }}" class="filter-btn">
+                  {{ sc.name }}
+                </button>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista di post -->
+      <div class="mix-container grid sm:grid-cols-2 md:grid-cols-3 gap-10 pt-5 mb-5 border-t">
+        {% for post in progetti %} {% include ['tease-'~post.post_type~'.twig',
+        'tease.twig'] %} {% endfor %}
+      </div>
+      {% include 'partial/pagination.twig' with { pagination:
+      posts.pagination({show_all: false, mid_size: 3, end_size: 2}) } %}
+    </main>
+  </article>
+</div>
+
+<script>
+  let mixer;
+  window.addEventListener("load", function () {
+    mixer = mixitup(".mix-container", {
+      controls: {
+        toggleLogic: "and",
+      },
+      animation: {
+        duration: 245,
+        nudge: true,
+        reverseOut: true,
+        effects: "fade",
+      },
+      classNames: {
+        block: "",
+        elementFilter: "filter",
+      },
+    });
+  });
+</script>
+{% endblock %}
