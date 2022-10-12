@@ -94,7 +94,7 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
         <div class="swiper-wrapper">
           {% for image in post.meta('galleria') %}
           <div class="swiper-slide select-none">
-            <img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover aspect-square" src="{{ Image(image) | towebp | resize(1800) }}" />
+            <img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover " src="{{ Image(image) | towebp | resize(1200) }}" />
           </div>
           {% endfor %}
         </div>

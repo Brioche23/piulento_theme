@@ -67,7 +67,8 @@ close(){
 
     <!-- <footer></footer> -->
     {% block footer %}
-    <footer id="footer" class="flex left-0 bg-slate-700 text-white {{ post.link != 'https://www.piulento.it/home/' ? 'mt-10'   }}   py-5 md:py-10 text-sm place-content-center bottom-0">
+   
+    <footer id="footer" class="flex left-0 bg-slate-700 text-white {{ post.link != 'https://www.piulento.it/' ? 'mt-10'   }}   py-5 md:py-10 text-sm place-content-center bottom-0">
       {% include 'footer.twig' with {'items': footer.get_items} %}
     </footer>
   </div>

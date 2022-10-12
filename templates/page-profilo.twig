@@ -36,12 +36,12 @@
           }
         }" x-on:keydown.escape.prevent.stop="close($refs.button)"
             x-on:focusin.window="! $refs.bio.contains($event.target) " x-id="['dropdown-button']">
-            <!-- <figure class="aspect-square mb-5">
+            <figure class="aspect-square mb-5">
             <img
               src="{{ Image(item.foto).src | towebp }}"
               class="saturate-0 h-full object-cover"
             />
-          </figure> -->
+          </figure> 
             <div class="">
               <h4 class="text-2xl font-sans font-bold">
                 {{ item.nome_cognome }}
