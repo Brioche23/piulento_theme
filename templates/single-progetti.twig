@@ -7,7 +7,7 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
 
 <style>
   :root {
-    --swiper-theme-color: #000;
+    --swiper-theme-color: rgb(255, 255, 255);
     --swiper-navigation-size: 48;
   }
 
@@ -19,26 +19,37 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
   .swiper-slide {
     text-align: center;
     width: auto;
-    
+
     object-fit: cover;
   }
 
   .swiper-pagination {
     bottom: 0px;
   }
+
+  .swiper-button {
+    background-color: black;
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+  }
+
+  .swiper-button:hover {
+    background-color: #cf2e2e;
+
+  }
 </style>
 
 <div class="content-wrapper inside">
-  <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}"
-    data-barba="container" data-barba-namespace="{{ post.title }}">
+  <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}" data-barba="container"
+    data-barba-namespace="{{ post.title }}">
     <main class="article-content pt-8">
       <h1 class="titolo">
         {{ post.title }}
       </h1>
       {% if post.thumbnail.src %}
       <div class="pt-10">
-        <img class="open-img"
-          src="{{ post.thumbnail.src|towebp|resize(1800) }}" />
+        <img class="open-img" src="{{ post.thumbnail.src|towebp|resize(1800) }}" />
       </div>
       {% endif %}
 
@@ -47,8 +58,7 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
 
         <div class="md:flex pt-6">
           {# Cartiglio #}
-          <div 
-            class="cartiglio">
+          <div class="cartiglio">
             {% for voce in voci_cartiglio %}
             {% if voce.acf == true %}
             {% if post.meta(voce.url) %}
@@ -74,7 +84,7 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
               <a class="hover:text-red-500" href="{{ ref.link.url }}" target="{{ ref.link.target }}">
                 <p class="text-sm">{{ ref.link.title }}</p>
               </a>
-            {% endfor %}
+              {% endfor %}
 
               {% endif %}
             </div>
@@ -93,13 +103,15 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
       <div class="swiper mySwiper my-16">
         <div class="swiper-wrapper">
           {% for image in post.meta('galleria') %}
-          <div class="swiper-slide select-none">
-            <img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover " src="{{ Image(image) | towebp | resize(1200) }}" />
+          <div class="swiper-slide select-none border-[1px] border-gray-400">
+            <img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover "
+              src="{{ Image(image) | towebp | resize(1200) }}" />
           </div>
           {% endfor %}
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+
+        <div class="swiper-button swiper-button-next transition-all duration-300"></div>
+        <div class="swiper-button swiper-button-prev transition-all duration-300"></div>
         {#
         <div class="swiper-pagination"></div>
         #}
@@ -109,19 +121,19 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
       <section class="mt-10 pt-10 border-t">
         <h3 class="font-bold text-2xl">Altri progetti </h3>
         <div class="md:grid md:grid-cols-3 gap-10 space-y-10 md:space-y-0 py-10">
-      {% if progetti_single|length > 0  %}
+          {% if progetti_single|length > 0 %}
           {% for post in progetti_single %}
           <div class="card group">
             {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
           </div>
           {% endfor %}
-      {% elseif progetti_single|length == 0 %}
-        {% for post in last_3 %}
+          {% elseif progetti_single|length == 0 %}
+          {% for post in last_3 %}
           <div class="card group">
             {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
           </div>
           {% endfor %}
-      {% endif %}
+          {% endif %}
         </div>
       </section>
 

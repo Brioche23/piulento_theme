@@ -29,7 +29,7 @@
   <div class="w-auto pt-5">
     <ul class="text-base sm:text-sm">
       {% for item in items %}
-      <li class="{{ item.classes | join(' ') }} {{ (item.title == 'Facebook' or item.title == 'Portfolio') ? 'mt-5' }}">
+      <li class="{{ item.classes | join(' ') }} {{ (item.title == 'Facebook') ? 'mt-5' }}">
         <a target="{{ item.target }}" href="{{ item.link }}" class="text-white arrow right">{{ item.title }}</a>
       </li>
       {% endfor %}
