@@ -83,6 +83,10 @@
   .plus.attivo {
     @apply after:rotate-45;
   }
+
+  .richtext p a {
+    @apply text-red-500;
+  }
 }
 
 html {

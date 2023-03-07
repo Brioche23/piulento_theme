@@ -24,6 +24,7 @@ if (file_exists($composer_autoload)) {
 
 add_action('init', 'create_attivita_hierarchical_taxonomy', 0);
 add_action('init', 'create_scala_hierarchical_taxonomy', 0);
+add_action('init', 'create_progetto_hierarchical_taxonomy', 0);
 
 //create a custom taxonomy name it subjects for your posts
 
@@ -91,6 +92,38 @@ function create_scala_hierarchical_taxonomy()
 	));
 }
 
+function create_progetto_hierarchical_taxonomy()
+{
+
+	// Add new taxonomy, make it hierarchical like categories
+	//first do the translations part for GUI
+
+	$labels = array(
+		'name' => _x('Tipo Progetto', 'taxonomy general name'),
+		'singular_name' => _x('Tipo Progetto', 'taxonomy singular name'),
+		'search_items' =>  __('Cerca Tipo Progetto'),
+		'all_items' => __('Tutte i Tipi di Progetto'),
+		'parent_item' => __('Parent'),
+		'parent_item_colon' => __('Parent:'),
+		'edit_item' => __('Edit Tipo Progetto'),
+		'update_item' => __('Aggiorna Tipo Progetto'),
+		'add_new_item' => __('Aggiungi Tipo Progetto'),
+		'new_item_name' => __('Nuovo Nome Tipo Progetto'),
+		'menu_name' => __('Tipo Progetto'),
+	);
+
+	// Now register the taxonomy
+	register_taxonomy('tipo_progetto', array('progetti'), array(
+		'hierarchical' => true,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_in_rest' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'tipo_progetto'),
+	));
+}
+
 // array of filters (field key => field name)
 $GLOBALS['query_filters'] = array(
 	1 => 'cat',
@@ -98,6 +131,7 @@ $GLOBALS['query_filters'] = array(
 	3 => 'tag',
 	4 => 'scala',
 	5 => 'anno',
+	6 => 'tipo_progetto',
 );
 
 /**

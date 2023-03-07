@@ -3,7 +3,8 @@ nome: "Sezione", url: "category", acf:false }, { id:1, nome: "Attività", url:
 "attivita", acf:false }, { id:2, nome: "Committente", url:"committente",
 acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
 "Anno", url: "anno", acf:true }, { id:5, nome: "Luogo", url: "luogo", acf:true
-}, ] %}
+}, { id:6, nome: "Tipo di Progetto", url: "tipo_progetto", acf:false}, { id:7, nome: "Gruppo di lavoro", url:
+"gruppo_di_lavoro", acf:true}, ] %}
 
 <style>
   :root {
@@ -60,14 +61,19 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
           {# Cartiglio #}
           <div class="cartiglio">
             {% for voce in voci_cartiglio %}
+
             {% if voce.acf == true %}
+
             {% if post.meta(voce.url) %}
             <div class="elemento-cartiglio">
               <p class="text-gray-600">{{ voce.nome }}</p>
               <p class="text-sm">{{ post.meta(voce.url) }}</p>
             </div>
             {% endif %}
+
             {% elseif acf == false %}
+
+            {% if post.terms(voce.url)|length > 0 %}
             <div class="elemento-cartiglio">
               <p class="text-gray-600">{{ voce.nome }}</p>
               {% for term in post.terms(voce.url) %}
@@ -75,14 +81,19 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
               {% endfor %}
             </div>
             {% endif %}
+
+            {% endif %}
+
             {% endfor %}
             <!-- Sito Web -->
             <div class="">
               {% if post.meta('riferimenti') %}
               <p class="text-gray-600">Riferimenti</p>
               {% for ref in post.meta('riferimenti') %}
-              <a class="hover:text-red-500" href="{{ ref.link.url }}" target="{{ ref.link.target }}">
-                <p class="text-sm">{{ ref.link.title }}</p>
+              <a class="hover:text-red-500 " href="{{ ref.link.url }}" target="{{ ref.link.target }}">
+                <p class="text-sm truncate">
+                  {{ ref.link.title }}
+                </p>
               </a>
               {% endfor %}
 
@@ -91,10 +102,8 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
           </div>
 
           <!-- Testo -->
-          <div id="testo" class="space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 md:pt-0">
-            <p>
-              {{ post.meta("testo") | wpautop }}
-            </p>
+          <div id="testo" class="richtext space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 md:pt-0">
+            {{ post.meta("testo") | wpautop }}
           </div>
         </div>
       </div>
