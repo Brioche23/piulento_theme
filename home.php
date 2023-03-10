@@ -10,11 +10,12 @@
 
 $context          = Timber::context();
 $context['posts'] = new Timber\PostQuery();
-$context['posts'] = new Timber\PostQuery();
 $context['categories'] =  Timber::get_terms('categories');
 $context['tags'] =  Timber::get_terms('tags');
 $context['attivita'] =   Timber::get_terms('attivita');
 $context['scala'] =   Timber::get_terms('scala');
+$context['tipo_progetto'] =   Timber::get_terms('tipo_progetto');
+
 
 // Query funzionante
 $args2 = array(
@@ -28,7 +29,7 @@ $args2 = array(
 
 $context['progetti'] = Timber::get_posts(['post_type' => 'progetti', 'posts_per_page' => -1]);
 
-$context['foo']   = '';
+$context['foo']   = 'home.php';
 $templates        = array('index.twig');
 if (is_home()) {
 

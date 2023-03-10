@@ -20,6 +20,7 @@ $context['categories'] =  Timber::get_terms('categories');
 $context['tags'] =  Timber::get_terms('tags');
 $context['attivita'] =   Timber::get_terms('attivita');
 $context['scala'] =   Timber::get_terms('scala');
+$context['tipo_progetto'] =   Timber::get_terms('tipo_progetto');
 
 //	Query funzionante
 $args2 = array(

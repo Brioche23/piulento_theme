@@ -1,4 +1,6 @@
-{% extends "base.twig" %} {% block content %} {% set voci_cartiglio=[ { id:0,
+{% extends "base.twig" %}
+{% block content %}
+	{% set voci_cartiglio=[ { id:0,
 nome: "Sezione", url: "category", acf:false }, { id:1, nome: "Attività", url:
 "attivita", acf:false }, { id:2, nome: "Committente", url:"committente",
 acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
@@ -6,176 +8,175 @@ acf:true }, { id:3, nome: "Scala", url: "scala", acf:false }, { id:4, nome:
 }, { id:6, nome: "Tipo di Progetto", url: "tipo_progetto", acf:false}, { id:7, nome: "Gruppo di lavoro", url:
 "gruppo_di_lavoro", acf:true}, ] %}
 
-<style>
-  :root {
-    --swiper-theme-color: rgb(255, 255, 255);
-    --swiper-navigation-size: 48;
-  }
+	<style>:root
+	{
+		--swiper-theme-color: rgb(255, 255, 255);
+		--swiper-navigation-size: 48;
+	}
 
-  .swiper-wrapper {
-    width: 50%;
-    height: auto;
-  }
+	.swiper-wrapper {
+		width: 50%;
+		height: auto;
+	}
 
-  .swiper-slide {
-    text-align: center;
-    width: auto;
+	.swiper-slide {
+		text-align: center;
+		width: auto;
 
-    object-fit: cover;
-  }
+		object-fit: cover;
+	}
 
-  .swiper-pagination {
-    bottom: 0px;
-  }
+	.swiper-pagination {
+		bottom: 0;
+	}
 
-  .swiper-button {
-    background-color: black;
-    border-radius: 100%;
-    height: 35px;
-    width: 35px;
-  }
+	.swiper-button {
+		background-color: black;
+		border-radius: 100%;
+		height: 35px;
+		width: 35px;
+	}
 
-  .swiper-button:hover {
-    background-color: #cf2e2e;
+	.swiper-button:hover {
+		background-color: #cf2e2e;
 
-  }
+	}
 </style>
 
 <div class="content-wrapper inside">
-  <article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}" data-barba="container"
-    data-barba-namespace="{{ post.title }}">
-    <main class="article-content pt-8">
-      <h1 class="titolo">
-        {{ post.title }}
-      </h1>
-      {% if post.thumbnail.src %}
-      <div class="pt-10">
-        <img class="open-img" src="{{ post.thumbnail.src|towebp|resize(1800) }}" />
-      </div>
-      {% endif %}
+	<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+		<main class="article-content pt-8">
+			<h1 class="titolo">
+				{{ post.title }}
+			</h1>
+			{% if post.thumbnail.src %}
+				<div class="pt-10">
+					<img class="open-img" src="{{ post.thumbnail.src|towebp|resize(1800) }}"/>
+				</div>
+			{% endif %}
 
-      <div class="article-content">
-        <h3 class="font-serif text-3xl sm:text-4xl pt-10">{{ post.meta("abstract") }}</h3>
+			<div class="article-content">
+				<h3 class="font-serif text-3xl sm:text-4xl pt-10">{{ post.meta("abstract") }}</h3>
 
-        <div class="md:flex pt-6">
-          {# Cartiglio #}
-          <div class="cartiglio">
-            {% for voce in voci_cartiglio %}
+				<div
+					class="md:flex pt-6">
+					{# Cartiglio #}
+					<div class="cartiglio">
+						{% for voce in voci_cartiglio %}
 
-            {% if voce.acf == true %}
+							{% if voce.acf == true %}
 
-            {% if post.meta(voce.url) %}
-            <div class="elemento-cartiglio">
-              <p class="text-gray-600">{{ voce.nome }}</p>
-              <p class="text-sm">{{ post.meta(voce.url) }}</p>
-            </div>
-            {% endif %}
+								{% if post.meta(voce.url) %}
+									<div class="elemento-cartiglio">
+										<p class="text-gray-600">{{ voce.nome }}</p>
+										<p class="text-sm">{{ post.meta(voce.url) }}</p>
+									</div>
+								{% endif %}
 
-            {% elseif acf == false %}
+							{% elseif acf == false %}
 
-            {% if post.terms(voce.url)|length > 0 %}
-            <div class="elemento-cartiglio">
-              <p class="text-gray-600">{{ voce.nome }}</p>
-              {% for term in post.terms(voce.url) %}
-              <p>{{ term.name }}</p>
-              {% endfor %}
-            </div>
-            {% endif %}
+								{% if post.terms(voce.url)|length > 0 %}
+									<div class="elemento-cartiglio">
+										<p class="text-gray-600">{{ voce.nome }}</p>
+										{% for term in post.terms(voce.url) %}
+											<p>{{ term.name }}</p>
+										{% endfor %}
+									</div>
+								{% endif %}
 
-            {% endif %}
+							{% endif %}
 
-            {% endfor %}
-            <!-- Sito Web -->
-            <div class="">
-              {% if post.meta('riferimenti') %}
-              <p class="text-gray-600">Riferimenti</p>
-              {% for ref in post.meta('riferimenti') %}
-              <a class="hover:text-red-500 " href="{{ ref.link.url }}" target="{{ ref.link.target }}">
-                <p class="text-sm truncate">
-                  {{ ref.link.title }}
-                </p>
-              </a>
-              {% endfor %}
+						{% endfor %}
+						<!-- Sito Web -->
+						<div class="">
+							{% if post.meta('riferimenti') %}
+								<p class="text-gray-600">Riferimenti</p>
+								{% for ref in post.meta('riferimenti') %}
+									<a class="hover:text-red-500 " href="{{ ref.link.url }}" target="{{ ref.link.target }}">
+										<p class="text-sm truncate">
+											{{ ref.link.title }}
+										</p>
+									</a>
+								{% endfor %}
 
-              {% endif %}
-            </div>
-          </div>
+							{% endif %}
+						</div>
+					</div>
 
-          <!-- Testo -->
-          <div id="testo" class="richtext space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 md:pt-0">
-            {{ post.meta("testo") | wpautop }}
-          </div>
-        </div>
-      </div>
+					<!-- Testo -->
+					<div id="testo" class="richtext space-y-5 text-xl md:w-3/4 lg:w-2/3 font-serif gap-10 md:pt-0">
+						{{ post.meta("testo") | wpautop }}
+					</div>
+				</div>
+			</div>
 
-      <!-- TODO Flasha con safari?? -->
-      <div class="swiper mySwiper my-16">
-        <div class="swiper-wrapper">
-          {% for image in post.meta('galleria') %}
-          <div class="swiper-slide select-none border-[1px] border-gray-400">
-            <img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover "
-              src="{{ Image(image) | towebp | resize(1200) }}" />
-          </div>
-          {% endfor %}
-        </div>
+			<!-- TODO Flasha con safari?? -->
+			<div class="swiper mySwiper my-16">
+				<div class="swiper-wrapper">
+					{% for image in post.meta('galleria') %}
+						<div class="swiper-slide select-none border-[1px] border-gray-400">
+							<img load="lazy" class="slide-image h-[350px] md:h-[400px] lg:h-[500px] object-cover " src="{{ Image(image) | towebp | resize(1200) }}"/>
+						</div>
+					{% endfor %}
+				</div>
 
-        <div class="swiper-button swiper-button-next transition-all duration-300"></div>
-        <div class="swiper-button swiper-button-prev transition-all duration-300"></div>
-        {#
-        <div class="swiper-pagination"></div>
-        #}
-      </div>
+				<div class="swiper-button swiper-button-next transition-all duration-300"></div>
+				<div class="swiper-button swiper-button-prev transition-all duration-300"></div>
+				{#
+				        <div class="swiper-pagination"></div>
+				        #}
+			</div>
 
-      <!-- TODO Altri Post (Scelti da Utente o Auto?) -->
-      <section class="mt-10 pt-10 border-t">
-        <h3 class="font-bold text-2xl">Altri progetti </h3>
-        <div class="md:grid md:grid-cols-3 gap-10 space-y-10 md:space-y-0 py-10">
-          {% if progetti_single|length > 0 %}
-          {% for post in progetti_single %}
-          <div class="card group">
-            {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
-          </div>
-          {% endfor %}
-          {% elseif progetti_single|length == 0 %}
-          {% for post in last_3 %}
-          <div class="card group">
-            {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
-          </div>
-          {% endfor %}
-          {% endif %}
-        </div>
-      </section>
+			<!-- TODO Altri Post (Scelti da Utente o Auto?) -->
+			<section class="mt-10 pt-10 border-t">
+				<h3 class="font-bold text-2xl">Altri progetti
+				</h3>
+				<div class="md:grid md:grid-cols-3 gap-10 space-y-10 md:space-y-0 py-10">
+					{% if progetti_single|length > 0 %}
+						{% for post in progetti_single %}
+							<div class="card group">
+								{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+							</div>
+						{% endfor %}
+					{% elseif progetti_single|length == 0 %}
+						{% for post in last_3 %}
+							<div class="card group">
+								{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</section>
 
-    </main>
-  </article>
+		</main>
+	</article>
 </div>
 
 <script>
-  window.addEventListener("load", function () {
-    let swiper = new Swiper(".mySwiper", {
-      loop: true,
-      grabCursor: true,
-      slidesPerView: "auto",
-      centeredSlides: true,
-      spaceBetween: 30,
-      keyboard: {
-        enabled: true,
-        onlyInViewport: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        type: "fraction",
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      a11y: {
-        prevSlideMessage: "Previous slide",
-        nextSlideMessage: "Next slide",
-      },
-    });
-  });
+	window.addEventListener("load", function () {
+let swiper = new Swiper(".mySwiper", {
+loop: true,
+grabCursor: true,
+slidesPerView: "auto",
+centeredSlides: true,
+spaceBetween: 30,
+keyboard: {
+enabled: true,
+onlyInViewport: false
+},
+pagination: {
+el: ".swiper-pagination",
+type: "fraction"
+},
+navigation: {
+nextEl: ".swiper-button-next",
+prevEl: ".swiper-button-prev"
+},
+a11y: {
+prevSlideMessage: "Previous slide",
+nextSlideMessage: "Next slide"
+}
+});
+});
 </script>
-<!-- /content-wrapper -->
-{% endblock %}
+<!-- /content-wrapper -->{% endblock %}
