@@ -99,17 +99,17 @@ function create_progetto_hierarchical_taxonomy()
 	//first do the translations part for GUI
 
 	$labels = array(
-		'name' => _x('Tipo Progetto', 'taxonomy general name'),
-		'singular_name' => _x('Tipo Progetto', 'taxonomy singular name'),
-		'search_items' =>  __('Cerca Tipo Progetto'),
-		'all_items' => __('Tutte i Tipi di Progetto'),
+		'name' => _x('Incarico', 'taxonomy general name'),
+		'singular_name' => _x('Incarico', 'taxonomy singular name'),
+		'search_items' =>  __('Cerca Incarico'),
+		'all_items' => __('Tutte gli incarichi'),
 		'parent_item' => __('Parent'),
 		'parent_item_colon' => __('Parent:'),
-		'edit_item' => __('Edit Tipo Progetto'),
-		'update_item' => __('Aggiorna Tipo Progetto'),
-		'add_new_item' => __('Aggiungi Tipo Progetto'),
-		'new_item_name' => __('Nuovo Nome Tipo Progetto'),
-		'menu_name' => __('Tipo Progetto'),
+		'edit_item' => __('Edit Incarico'),
+		'update_item' => __('Aggiorna Incarico'),
+		'add_new_item' => __('Aggiungi Incarico'),
+		'new_item_name' => __('Nuovo Nome Incarico'),
+		'menu_name' => __('Incarico'),
 	);
 
 	// Now register the taxonomy
